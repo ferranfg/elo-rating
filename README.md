@@ -3,9 +3,9 @@ A PHP class which implements the [Elo rating system](http://en.wikipedia.org/wik
 
 # Install with composer
 
-`composer require chovanec/elo-rating dev-master`
+`composer require ferranfg/elo-rating`
 
-Link to Packagist.org: https://packagist.org/packages/chovanec/elo-rating
+Link to Packagist.org: https://packagist.org/packages/ferranfg/elo-rating
 
 # Usage
 
