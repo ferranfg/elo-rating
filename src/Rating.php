@@ -33,6 +33,9 @@ class Rating
     protected $_expectedA;
     protected $_expectedB;
 
+    protected $_diffRatingA;
+    protected $_diffRatingB;
+
     protected $_newRatingA;
     protected $_newRatingB;
 
@@ -72,6 +75,10 @@ class Rating
         $this->_expectedA = $expectedScores['a'];
         $this->_expectedB = $expectedScores['b'];
 
+        $diffRatings = $this->_getDiffRatings($this->_expectedA, $this->_expectedB, $this->_scoreA, $this->_scoreB);
+        $this->_diffRatingA = $diffRatings['a'];
+        $this->_diffRatingB = $diffRatings['b'];
+
         $newRatings = $this ->_getNewRatings($this->_ratingA, $this->_ratingB, $this->_expectedA, $this->_expectedB, $this->_scoreA, $this->_scoreB);
         $this->_newRatingA = $newRatings['a'];
         $this->_newRatingB = $newRatings['b'];
@@ -92,6 +99,19 @@ class Rating
         );
     }
 
+    /**
+     * Retrieve the calculated data.
+     *
+     * @return array An array containing the diff ratings for A and B.
+     */
+    public function getDiffRatings()
+    {
+        return array (
+            'a' => $this->_diffRatingA,
+            'b' => $this->_diffRatingB
+        );
+    }
+
     // Protected & private functions begin here
 
     /**
@@ -99,7 +119,7 @@ class Rating
      * @param int $ratingB The Rating of Player B
      * @return array
      */
-    protected function _getExpectedScores($ratingA,$ratingB)
+    protected function _getExpectedScores($ratingA, $ratingB)
     {
         $expectedScoreA = 1 / ( 1 + ( pow( 10 , ( $ratingB - $ratingA ) / 400 ) ) );
         $expectedScoreB = 1 / ( 1 + ( pow( 10 , ( $ratingA - $ratingB ) / 400 ) ) );
@@ -107,6 +127,24 @@ class Rating
         return array (
             'a' => $expectedScoreA,
             'b' => $expectedScoreB
+        );
+    }
+
+    /**
+     * @param int $expectedA The expected score of Player A
+     * @param int $expectedB The expected score of Player B
+     * @param int $scoreA The score of Player A
+     * @param int $scoreB The score of Player B
+     * @return array
+     */
+    protected function _getDiffRatings($expectedA, $expectedB, $scoreA, $scoreB)
+    {
+        $diffRatingA = $this->_kFactor * ( $scoreA - $expectedA );
+        $diffRatingB = $this->_kFactor * ( $scoreB - $expectedB );
+
+        return array (
+            'a' => $diffRatingA,
+            'b' => $diffRatingB
         );
     }
 
@@ -119,10 +157,12 @@ class Rating
      * @param int $scoreB The score of Player B
      * @return array
      */
-    protected function _getNewRatings($ratingA,$ratingB,$expectedA,$expectedB,$scoreA,$scoreB)
+    protected function _getNewRatings($ratingA, $ratingB, $expectedA, $expectedB, $scoreA, $scoreB)
     {
-        $newRatingA = $ratingA + ( $this->_kFactor * ( $scoreA - $expectedA ) );
-        $newRatingB = $ratingB + ( $this->_kFactor * ( $scoreB - $expectedB ) );
+        $diffRatings = $this->_getDiffRatings($expectedA, $expectedB, $scoreA, $scoreB);
+
+        $newRatingA = $ratingA + $diffRatings['a'];
+        $newRatingB = $ratingB + $diffRatings['b'];
 
         return array (
             'a' => $newRatingA,

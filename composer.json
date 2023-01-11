@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Ferranfg\\Elo\\": "src/"
+            "Ferranfg\\Elo\\": "src"
         }
     },
     "minimum-stability": "dev",
