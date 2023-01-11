@@ -15,7 +15,7 @@ class Rating
     /**
      * @var int The K Factor used.
      */
-    const KFACTOR = 16;
+    protected $_kFactor;
 
     const WIN = 1;
     const DRAW = 0.5;
@@ -26,7 +26,7 @@ class Rating
      */
     protected $_ratingA;
     protected $_ratingB;
-    
+
     protected $_scoreA;
     protected $_scoreB;
 
@@ -45,8 +45,10 @@ class Rating
      * @param int $scoreA Score of A
      * @param int $scoreB Score of B
      */
-    public function __construct($ratingA, $ratingB, $scoreA, $scoreB)
+    public function __construct($ratingA, $ratingB, $scoreA, $scoreB, $kFactor = 16)
     {
+        $this->_kFactor = $kFactor;
+
         $this->setNewSettings($ratingA, $ratingB, $scoreA, $scoreB);
     }
 
@@ -119,8 +121,8 @@ class Rating
      */
     protected function _getNewRatings($ratingA,$ratingB,$expectedA,$expectedB,$scoreA,$scoreB)
     {
-        $newRatingA = $ratingA + ( self::KFACTOR * ( $scoreA - $expectedA ) );
-        $newRatingB = $ratingB + ( self::KFACTOR * ( $scoreB - $expectedB ) );
+        $newRatingA = $ratingA + ( $this->_kFactor * ( $scoreA - $expectedA ) );
+        $newRatingB = $ratingB + ( $this->_kFactor * ( $scoreB - $expectedB ) );
 
         return array (
             'a' => $newRatingA,
