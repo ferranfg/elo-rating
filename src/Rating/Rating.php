@@ -7,12 +7,11 @@
  * @copyright Copyright © 2012 - 2014 Michal Chovanec
  * @license Creative Commons Attribution 4.0 International License
  */
- 
-namespace Chovanec\Rating;
+
+namespace Ferranfg\Elo;
 
 class Rating
 {
-
     /**
      * @var int The K Factor used.
      */
@@ -46,7 +45,7 @@ class Rating
      * @param int $scoreA Score of A
      * @param int $scoreB Score of B
      */
-    public function  __construct($ratingA,$ratingB,$scoreA,$scoreB)
+    public function __construct($ratingA, $ratingB, $scoreA, $scoreB)
     {
         $this->setNewSettings($ratingA, $ratingB, $scoreA, $scoreB);
     }
@@ -60,20 +59,20 @@ class Rating
      * @param int $scoreB Score of B
      * @return self
      */
-    public function setNewSettings($ratingA,$ratingB,$scoreA,$scoreB)
+    public function setNewSettings($ratingA, $ratingB, $scoreA, $scoreB)
     {
-        $this -> _ratingA = $ratingA;
-        $this -> _ratingB = $ratingB;
-        $this -> _scoreA = $scoreA;
-        $this -> _scoreB = $scoreB;
+        $this->_ratingA = $ratingA;
+        $this->_ratingB = $ratingB;
+        $this->_scoreA = $scoreA;
+        $this->_scoreB = $scoreB;
 
-        $expectedScores = $this -> _getExpectedScores($this -> _ratingA,$this -> _ratingB);
-        $this -> _expectedA = $expectedScores['a'];
-        $this -> _expectedB = $expectedScores['b'];
+        $expectedScores = $this->_getExpectedScores($this->_ratingA, $this->_ratingB);
+        $this->_expectedA = $expectedScores['a'];
+        $this->_expectedB = $expectedScores['b'];
 
-        $newRatings = $this ->_getNewRatings($this -> _ratingA, $this -> _ratingB, $this -> _expectedA, $this -> _expectedB, $this -> _scoreA, $this -> _scoreB);
-        $this -> _newRatingA = $newRatings['a'];
-        $this -> _newRatingB = $newRatings['b'];
+        $newRatings = $this ->_getNewRatings($this->_ratingA, $this->_ratingB, $this->_expectedA, $this->_expectedB, $this->_scoreA, $this->_scoreB);
+        $this->_newRatingA = $newRatings['a'];
+        $this->_newRatingB = $newRatings['b'];
 
         return $this;
     }
@@ -86,8 +85,8 @@ class Rating
     public function getNewRatings()
     {
         return array (
-            'a' => $this -> _newRatingA,
-            'b' => $this -> _newRatingB
+            'a' => $this->_newRatingA,
+            'b' => $this->_newRatingB
         );
     }
 
