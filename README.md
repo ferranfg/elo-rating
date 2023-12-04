@@ -1,5 +1,5 @@
 # Elo Rating PHP
-A PHP class which implements the [Elo rating system](http://en.wikipedia.org/wiki/Elo_rating_system).
+A PHP class which implements the [Elo rating system](http://en.wikipedia.org/wiki/Elo_rating_system) for [Fantasy Padel Tour](https://fantasypadeltour.com).
 
 # Install with composer
 
